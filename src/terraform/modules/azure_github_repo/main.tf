@@ -28,6 +28,12 @@ resource "azurerm_resource_group" "resource_group" {
   for_each = var.environments
   name     = "rg-${var.project_code}-${var.location_code}-${each.value}"
   location = var.location
+  tags = {
+    project       = var.project_code
+    repository    = var.repository_name
+    creation_date = formatdate("YYYY/MM/DD", timestamp())
+    environment   = each.value
+  }
 }
 
 resource "azurerm_role_assignment" "app_reg_role" {
