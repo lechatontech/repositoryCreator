@@ -34,6 +34,9 @@ resource "azurerm_resource_group" "resource_group" {
     creation_date = formatdate("YYYY/MM/DD", timestamp())
     environment   = each.value
   }
+  lifecycle {
+    ignore_changes = [tags.creation_date]
+  }
 }
 
 resource "azurerm_role_assignment" "app_reg_role" {
